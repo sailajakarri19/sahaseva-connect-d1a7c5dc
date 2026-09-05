@@ -96,11 +96,11 @@ export function registerAccount(
 export function setAccountStatus(email: string, status: AccountStatus, reason?: string) {
   const e = email.toLowerCase();
   write(
-    readRaw().map((a) =>
-      a.email.toLowerCase() === e
-        ? { ...a, status, ...(reason ? { rejectionReason: reason } : { rejectionReason: undefined }) }
-        : a,
-    ),
+    readRaw().map((a) => {
+      if (a.email.toLowerCase() !== e) return a;
+      const { rejectionReason: _drop, ...rest } = a;
+      return reason ? { ...rest, status, rejectionReason: reason } : { ...rest, status };
+    }),
   );
 }
 
