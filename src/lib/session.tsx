@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { demoAccounts, roleHome, type DemoAccount, type Role } from "./sahaseva-data";
+import { findAccount } from "./accounts";
 
 const KEY = "sahaseva.session";
 
@@ -16,14 +17,48 @@ function read(): Session | null {
   }
 }
 
-export function signIn(email: string, password: string): Session | { error: string } {
-  const acc = demoAccounts.find((a) => a.email.toLowerCase() === email.trim().toLowerCase());
-  if (!acc) return { error: "No account found with that email." };
-  if (acc.password !== password) return { error: "Incorrect password." };
-  const { password: _pw, ...session } = acc;
+function store(session: Session) {
   window.localStorage.setItem(KEY, JSON.stringify(session));
   window.dispatchEvent(new Event("sahaseva-session"));
   return session;
+}
+
+export function signIn(email: string, password: string): Session | { error: string } {
+  const clean = email.trim().toLowerCase();
+
+  const demo = demoAccounts.find((a) => a.email.toLowerCase() === clean);
+  if (demo) {
+    if (demo.password !== password) return { error: "Incorrect password." };
+    const { password: _pw, ...session } = demo;
+    return store(session);
+  }
+
+  const acc = findAccount(clean);
+  if (!acc) return { error: "No account found with that email." };
+  if (acc.password !== password) return { error: "Incorrect password." };
+
+  if (acc.status === "PENDING") {
+    return {
+      error:
+        "Your profile is under verification by Admin. You will be able to login after Admin approval. Please wait.",
+    };
+  }
+  if (acc.status === "REJECTED") {
+    return {
+      error: `Your registration was rejected by Admin. Reason: ${
+        acc.rejectionReason ?? "Not specified"
+      }. Please re-submit your documents.`,
+    };
+  }
+
+  return store({
+    email: acc.email,
+    name: acc.name,
+    role: acc.role,
+    org: acc.worker?.society ?? "SahaSeva customer",
+    location: `${acc.address.village}, ${acc.address.district}`,
+    verified: true,
+  });
 }
 
 export function signOut() {

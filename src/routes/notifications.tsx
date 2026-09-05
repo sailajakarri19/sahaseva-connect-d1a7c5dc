@@ -32,17 +32,10 @@ const feed = {
     { t: "Payment received", d: "₹1,450 credited to your cooperative payout account.", tag: "Payment", time: "3 h ago" },
     { t: "Insurance renewal reminder", d: "Group insurance renews in 42 days.", tag: "Welfare", time: "2 d ago" },
   ],
-  SOCIETY_ADMIN: [
-    { t: "Worker verification pending", d: "Ganesh Rathod — skill & certificate review needed.", tag: "Verification", time: "20 min ago" },
-    { t: "Emergency request", d: "Electrical emergency in Sangareddy Town.", tag: "Emergency", time: "1 h ago" },
-    { t: "Welfare issue", d: "Kavitha Naik raised an insurance renewal case.", tag: "Welfare", time: "Today" },
-  ],
-  FEDERATION_ADMIN: [
-    { t: "High demand alert", d: "Plumbing demand HIGH in Sangareddy Town.", tag: "AI", time: "30 min ago" },
-    { t: "Society report ready", d: "Monthly performance for 4 societies.", tag: "Report", time: "Today" },
-  ],
-  SUPER_ADMIN: [
+  ADMIN: [
+    { t: "Worker verification pending", d: "New cooperative worker registrations await your approval.", tag: "Verification", time: "20 min ago" },
     { t: "Fraud pattern flagged", d: "3 repeated cancellations from one account.", tag: "Fraud", time: "15 min ago" },
+    { t: "Society report ready", d: "Monthly performance for 4 societies.", tag: "Report", time: "Today" },
     { t: "Complaint escalated", d: "Unexpected charge dispute · SS-B-90155.", tag: "Complaint", time: "2 h ago" },
   ],
 } as const;
@@ -50,7 +43,9 @@ const feed = {
 function Notifications() {
   const { session } = useSession();
   const router = useRouter();
-  const items = session ? feed[session.role] : feed.CUSTOMER;
+  const items: readonly { t: string; d: string; tag: string; time: string }[] = session
+    ? feed[session.role]
+    : feed.CUSTOMER;
 
   return (
     <Phone>

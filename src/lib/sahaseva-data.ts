@@ -1,9 +1,4 @@
-export type Role =
-  | "CUSTOMER"
-  | "WORKER"
-  | "SOCIETY_ADMIN"
-  | "FEDERATION_ADMIN"
-  | "SUPER_ADMIN";
+export type Role = "CUSTOMER" | "WORKER" | "ADMIN";
 
 export type BookingStatus =
   | "Requested"
@@ -17,17 +12,13 @@ export type BookingStatus =
 export const roleHome: Record<Role, string> = {
   CUSTOMER: "/app",
   WORKER: "/worker",
-  SOCIETY_ADMIN: "/society",
-  FEDERATION_ADMIN: "/federation",
-  SUPER_ADMIN: "/admin",
+  ADMIN: "/admin",
 };
 
 export const roleLabel: Record<Role, string> = {
   CUSTOMER: "Customer",
   WORKER: "Cooperative Worker",
-  SOCIETY_ADMIN: "Society Admin",
-  FEDERATION_ADMIN: "Federation Admin",
-  SUPER_ADMIN: "Super Admin",
+  ADMIN: "Admin",
 };
 
 export type DemoAccount = {
@@ -42,7 +33,7 @@ export type DemoAccount = {
 export const demoAccounts: DemoAccount[] = [
   {
     email: "lakshmi@sahaseva.in",
-    password: "demo1234",
+    password: "DEMO1234",
     name: "Lakshmi Devi",
     role: "CUSTOMER",
     org: "Household customer",
@@ -50,35 +41,19 @@ export const demoAccounts: DemoAccount[] = [
   },
   {
     email: "ravi@sahaseva.in",
-    password: "demo1234",
+    password: "DEMO1234",
     name: "Ravi Kumar",
     role: "WORKER",
     org: "Sangareddy Labour Co-op Society",
     location: "Sangareddy Mandal",
   },
   {
-    email: "society@sahaseva.in",
-    password: "demo1234",
-    name: "Anitha Rao",
-    role: "SOCIETY_ADMIN",
-    org: "Sangareddy Labour Co-op Society",
-    location: "Sangareddy District",
-  },
-  {
-    email: "federation@sahaseva.in",
-    password: "demo1234",
-    name: "Sridhar Reddy",
-    role: "FEDERATION_ADMIN",
-    org: "Telangana Labour Co-op Federation",
-    location: "Telangana",
-  },
-  {
     email: "admin@sahaseva.in",
-    password: "demo1234",
-    name: "SahaSeva Control",
-    role: "SUPER_ADMIN",
+    password: "DEMO1234",
+    name: "Admin",
+    role: "ADMIN",
     org: "SahaSeva Platform",
-    location: "National",
+    location: "All societies",
   },
 ];
 
@@ -247,7 +222,7 @@ export type Worker = {
   photoTint: string;
 };
 
-const societies = [
+export const societies = [
   "Sangareddy Labour Co-op Society",
   "Zaheerabad Rural Workers Society",
   "Medak Skilled Trades Co-op",
