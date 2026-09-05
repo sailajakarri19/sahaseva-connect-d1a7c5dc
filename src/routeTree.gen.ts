@@ -13,9 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as AuthRouteImport } from './routes/auth'
-import { Route as FederationRouteImport } from './routes/federation'
 import { Route as NotificationsRouteImport } from './routes/notifications'
-import { Route as SocietyRouteImport } from './routes/society'
 import { Route as WorkerRouteImport } from './routes/worker'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppBookRouteImport } from './routes/app/book'
@@ -51,19 +49,9 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const FederationRoute = FederationRouteImport.update({
-  id: '/federation',
-  path: '/federation',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const NotificationsRoute = NotificationsRouteImport.update({
   id: '/notifications',
   path: '/notifications',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SocietyRoute = SocietyRouteImport.update({
-  id: '/society',
-  path: '/society',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WorkerRoute = WorkerRouteImport.update({
@@ -142,9 +130,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
-  '/federation': typeof FederationRoute
   '/notifications': typeof NotificationsRoute
-  '/society': typeof SocietyRoute
   '/worker': typeof WorkerRouteWithChildren
   '/app/book': typeof AppBookRoute
   '/app/bookings': typeof AppBookingsRoute
@@ -164,9 +150,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
-  '/federation': typeof FederationRoute
   '/notifications': typeof NotificationsRoute
-  '/society': typeof SocietyRoute
   '/app/book': typeof AppBookRoute
   '/app/bookings': typeof AppBookingsRoute
   '/app/emergency': typeof AppEmergencyRoute
@@ -187,9 +171,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
-  '/federation': typeof FederationRoute
   '/notifications': typeof NotificationsRoute
-  '/society': typeof SocietyRoute
   '/worker': typeof WorkerRouteWithChildren
   '/app/book': typeof AppBookRoute
   '/app/bookings': typeof AppBookingsRoute
@@ -212,9 +194,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/app'
     | '/auth'
-    | '/federation'
     | '/notifications'
-    | '/society'
     | '/worker'
     | '/app/book'
     | '/app/bookings'
@@ -234,9 +214,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/auth'
-    | '/federation'
     | '/notifications'
-    | '/society'
     | '/app/book'
     | '/app/bookings'
     | '/app/emergency'
@@ -256,9 +234,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/app'
     | '/auth'
-    | '/federation'
     | '/notifications'
-    | '/society'
     | '/worker'
     | '/app/book'
     | '/app/bookings'
@@ -280,9 +256,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   AppRoute: typeof AppRouteWithChildren
   AuthRoute: typeof AuthRoute
-  FederationRoute: typeof FederationRoute
   NotificationsRoute: typeof NotificationsRoute
-  SocietyRoute: typeof SocietyRoute
   WorkerRoute: typeof WorkerRouteWithChildren
 }
 
@@ -316,25 +290,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/federation': {
-      id: '/federation'
-      path: '/federation'
-      fullPath: '/federation'
-      preLoaderRoute: typeof FederationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/notifications': {
       id: '/notifications'
       path: '/notifications'
       fullPath: '/notifications'
       preLoaderRoute: typeof NotificationsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/society': {
-      id: '/society'
-      path: '/society'
-      fullPath: '/society'
-      preLoaderRoute: typeof SocietyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/worker': {
@@ -486,9 +446,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRoute,
-  FederationRoute: FederationRoute,
   NotificationsRoute: NotificationsRoute,
-  SocietyRoute: SocietyRoute,
   WorkerRoute: WorkerRouteWithChildren,
 }
 export const routeTree = rootRouteImport
